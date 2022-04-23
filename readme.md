@@ -4,6 +4,12 @@ https://www.youtube.com/watch?v=OqbGRZx4xUc&t=423s&ab_channel=freeCodeCamp.org
 
 ---
 
+<p align="center">
+  <img src="./Minesweeper_Gif.gif"/>
+</p>
+
+---
+
 ### Reserchered sites:
 
 - http://www.nemoquiz.com/python/tkinter-time-delay/
