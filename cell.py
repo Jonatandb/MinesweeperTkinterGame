@@ -162,6 +162,10 @@ class Cell:
         result = ctypes.windll.user32.MessageBoxW(
             0, "Congratulations! You won the game!", "Game over", 5
         )
+        if result == 2:
+            sys.exit()
+        else:
+            self.restart()
 
     def show_game_over_message(self):
         result = ctypes.windll.user32.MessageBoxW(
@@ -169,6 +173,12 @@ class Cell:
         )
         if result == 2:
             sys.exit()
+        else:
+            self.restart()
+
+    def restart(self):
+        # restart application by using os.execv
+        os.execv(sys.executable, ['python'] + sys.argv)
 
     @staticmethod
     def randomize_mines():
