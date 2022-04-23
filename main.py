@@ -19,6 +19,15 @@ top_frame = Frame(
 )
 top_frame.place(x=0, y=0)
 
+game_title = Label(
+    top_frame,
+    text="Minesweeper Game",
+    bg='black',
+    fg='white',
+    font=("", 48)
+)
+game_title.place(x=utils.width_percentage(25), y=utils.height_percentage(5))
+
 left_frame = Frame(
     root,
     bg='black',
