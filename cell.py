@@ -9,6 +9,8 @@ class Cell:
     all = []
     cell_count = settings.CELL_COUNT
     cell_count_label_object = None
+    mines_count_label_object = None
+    candidates_count = 0
 
     def __init__(self, x, y, window, is_mine=False):
         self.is_mine = is_mine
@@ -41,9 +43,22 @@ class Cell:
             height=4,
             bg="black",
             fg="white",
-            font=("Helvetica", 30)
+            font=("", 30)
         )
         Cell.cell_count_label_object = lbl
+
+    @staticmethod
+    def create_mines_count_label(location):
+        lbl = Label(
+            location,
+            text=f"Mines Left: {settings.MINES_COUNT}",
+            width=12,
+            height=4,
+            bg="black",
+            fg="white",
+            font=("", 30)
+        )
+        Cell.mines_count_label_object = lbl
 
     def left_click_actions(self, event):
         if self.is_mine:
@@ -62,12 +77,25 @@ class Cell:
 
     def right_click_actions(self, event):
         if not self.is_open:
-            if not self.is_mine_candidate:
-                self.is_mine_candidate = True
-                self.cell_btn_object.config(bg="yellow")
+            print(f"Candidates: {Cell.candidates_count}")
+
+            if self.is_mine_candidate:
+                if Cell.candidates_count > 0:
+                    Cell.candidates_count -= 1
+                    self.is_mine_candidate = False
+                    self.cell_btn_object.config(bg="SystemButtonFace")
             else:
-                self.is_mine_candidate = False
-                self.cell_btn_object.config(bg="SystemButtonFace")
+                if Cell.candidates_count < settings.MINES_COUNT:
+                    Cell.candidates_count += 1
+                    self.is_mine_candidate = True
+                    self.cell_btn_object.config(bg="yellow")
+
+            # Replace the text of cell count label with the newer count
+            if Cell.mines_count_label_object:
+                Cell.mines_count_label_object.configure(
+                    text=f"Mines Left: {settings.MINES_COUNT - Cell.candidates_count}",
+                )
+            print(f"    Candidates: {Cell.candidates_count}")
 
     def get_cell_by_coords(self, x, y):
         # Return a cell object based on the value of x and y

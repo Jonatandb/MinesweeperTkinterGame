@@ -50,9 +50,15 @@ for x in range(settings.GRID_SIZE):
         cell.create_btn_object(center_frame)
         cell.cell_btn_object.grid(column=x, row=y)
 
-# Call the label from the Cell class
+# Call the label from the Cell class to show remaining cells
 Cell.create_cell_count_label(left_frame)
 Cell.cell_count_label_object.place(x=0, y=0)
+
+# Call the label from the Cell class to show remaining mines
+Cell.create_mines_count_label(left_frame)
+Cell.mines_count_label_object.place(x=0, y=150)
+
+
 Cell.randomize_mines()
 
 # Run the window
