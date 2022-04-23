@@ -10,13 +10,14 @@ class Cell:
     cell_count = settings.CELL_COUNT
     cell_count_label_object = None
 
-    def __init__(self, x, y, is_mine=False):
+    def __init__(self, x, y, window, is_mine=False):
         self.is_mine = is_mine
         self.is_open = False
         self.is_mine_candidate = False
         self.cell_btn_object = None
         self.x = x
         self.y = y
+        self.window = window
 
         # Append the object to the Cell.all list
         Cell.all.append(self)
@@ -108,8 +109,12 @@ class Cell:
 
     def show_mine(self):
         self.cell_btn_object.config(bg="red")
+        self.window.after(100, self.show_game_over_message)
+
+    def show_game_over_message(self):
         ctypes.windll.user32.MessageBoxW(
-            0, "You clicked on a mine!", "Game Over", 0)
+            0, "Boom!", "Game Over :(", 0
+        )
         sys.exit()
 
     @staticmethod
