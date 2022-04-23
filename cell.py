@@ -53,7 +53,6 @@ class Cell:
                 for cell_obj in self.surrounded_cells:
                     cell_obj.show_cell()
             self.show_cell()
-            self.cell_btn_object.config(bg="SystemButtonFace")
 
     def right_click(self, event):
         if not self.is_open:
@@ -105,7 +104,10 @@ class Cell:
                 Cell.cell_count_label_object.configure(
                     text=f"Cells Left: {Cell.cell_count}"
                 )
-        # Mark the cell as opneed
+            # If this was a mine candidate then change the color back to normal
+            self.cell_btn_object.config(bg="SystemButtonFace")
+
+        # Mark the cell as opened
         self.is_open = True
 
     def show_mine(self):
