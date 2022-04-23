@@ -122,6 +122,9 @@ class Cell:
             if cell.is_mine:
                 cell.cell_btn_object.config(bg="red")
                 cell.cell_btn_object.configure(text="*")
+            # Cancel left and right click events on game over
+            cell.cell_btn_object.unbind('<Button-1>')
+            cell.cell_btn_object.unbind('<Button-3>')
         self.window.after(100, self.show_game_over_message)
 
     def show_you_win_message(self):
