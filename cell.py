@@ -111,7 +111,7 @@ class Cell:
                     text=f"Cells Left: {Cell.cell_count}"
                 )
             # If this was a mine candidate then change the color back to normal
-            self.cell_btn_object.config(bg="SystemButtonFace")
+            self.cell_btn_object.config(bg="lightgray")
 
         # Mark the cell as opened
         self.is_open = True
