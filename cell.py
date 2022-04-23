@@ -53,6 +53,7 @@ class Cell:
                 for cell_obj in self.surrounded_cells:
                     cell_obj.show_cell()
             self.show_cell()
+            self.cell_btn_object.config(bg="SystemButtonFace")
 
     def right_click(self, event):
         if not self.is_open:
