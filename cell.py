@@ -141,6 +141,10 @@ class Cell:
         )
         for picked_cell in picked_cells:
             picked_cell.is_mine = True
+            # IDBEHOLDA 😈
+            # picked_cell.cell_btn_object.configure(
+            #     text="*",
+            # )
 
     def __repr__(self):
         return f"Cell({self.x}, {self.y})"
