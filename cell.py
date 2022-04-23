@@ -119,8 +119,9 @@ class Cell:
     def show_mine(self):
         self.cell_btn_object.config(bg="red")
         for cell in Cell.all:
-            if cell.is_mine and not cell.is_open:
+            if cell.is_mine:
                 cell.cell_btn_object.config(bg="red")
+                cell.cell_btn_object.configure(text="*")
         self.window.after(100, self.show_game_over_message)
 
     def show_you_win_message(self):
