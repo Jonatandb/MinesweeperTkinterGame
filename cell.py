@@ -53,6 +53,9 @@ class Cell:
                 for cell_obj in self.surrounded_cells:
                     cell_obj.show_cell()
             self.show_cell()
+        # Cancel left and right click events if cell is already open
+        self.cell_btn_object.unbind('<Button-1>')
+        self.cell_btn_object.unbind('<Button-3>')
 
     def right_click(self, event):
         if not self.is_open:
