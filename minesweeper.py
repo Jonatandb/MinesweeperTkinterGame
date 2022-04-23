@@ -41,6 +41,8 @@ for x in range(settings.GRID_SIZE):
         cell.create_btn_object(center_frame)
         cell.cell_btn_object.grid(column=x, row=y)
 
+print(Cell.all)
 
 # Run the window
+
 root.mainloop()
