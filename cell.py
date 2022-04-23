@@ -125,7 +125,7 @@ class Cell:
 
     def show_you_win_message(self):
         ctypes.windll.user32.MessageBoxW(
-            0, "You Win! :)", "Game Over", 0
+            0, "Congratulations! You won the game!", "Game over", 0
         )
 
     def show_game_over_message(self):
