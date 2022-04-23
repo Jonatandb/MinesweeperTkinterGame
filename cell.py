@@ -28,8 +28,8 @@ class Cell:
             width=12,
             height=4
         )
-        btn.bind('<Button-1>', self.left_click)
-        btn.bind('<Button-3>', self.right_click)
+        btn.bind('<Button-1>', self.left_click_actions)
+        btn.bind('<Button-3>', self.right_click_actions)
         self.cell_btn_object = btn
 
     @staticmethod
@@ -45,7 +45,7 @@ class Cell:
         )
         Cell.cell_count_label_object = lbl
 
-    def left_click(self, event):
+    def left_click_actions(self, event):
         if self.is_mine:
             self.show_mine()
         else:
@@ -53,11 +53,14 @@ class Cell:
                 for cell_obj in self.surrounded_cells:
                     cell_obj.show_cell()
             self.show_cell()
+            # If there are no more cells left to open then the game is over
+            if Cell.cell_count == settings.MINES_COUNT:
+                self.window.after(100, self.show_you_win_message)
         # Cancel left and right click events if cell is already open
         self.cell_btn_object.unbind('<Button-1>')
         self.cell_btn_object.unbind('<Button-3>')
 
-    def right_click(self, event):
+    def right_click_actions(self, event):
         if not self.is_open:
             if not self.is_mine_candidate:
                 self.is_mine_candidate = True
@@ -120,11 +123,15 @@ class Cell:
                 cell.cell_btn_object.config(bg="red")
         self.window.after(100, self.show_game_over_message)
 
+    def show_you_win_message(self):
+        ctypes.windll.user32.MessageBoxW(
+            0, "You Win! :)", "Game Over", 0
+        )
+
     def show_game_over_message(self):
         ctypes.windll.user32.MessageBoxW(
-            0, "Boom!", "Game Over :(", 0
+            0, "You Lose! :(", "Game Over", 0
         )
-        sys.exit()
 
     @staticmethod
     def randomize_mines():
