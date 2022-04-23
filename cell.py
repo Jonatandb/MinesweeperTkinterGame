@@ -11,6 +11,7 @@ class Cell:
     def __init__(self, x, y, is_mine=False):
         self.is_mine = is_mine
         self.is_open = False
+        self.is_mine_candidate = False
         self.cell_btn_object = None
         self.x = x
         self.y = y
@@ -49,6 +50,15 @@ class Cell:
                 for cell_obj in self.surrounded_cells:
                     cell_obj.show_cell()
             self.show_cell()
+
+    def right_click(self, event):
+        if not self.is_open:
+            if not self.is_mine_candidate:
+                self.is_mine_candidate = True
+                self.cell_btn_object.config(bg="yellow")
+            else:
+                self.is_mine_candidate = False
+                self.cell_btn_object.config(bg="SystemButtonFace")
 
     def get_cell_by_coords(self, x, y):
         # Return a cell object based on the value of x and y
@@ -97,10 +107,6 @@ class Cell:
     def show_mine(self):
         # A logic to interrupt the game and display a message that player lost!
         self.cell_btn_object.config(bg="red")
-
-    def right_click(self, event):
-        print("Right click")
-        print(event)
 
     @staticmethod
     def randomize_mines():
