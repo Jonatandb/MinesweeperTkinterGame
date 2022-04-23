@@ -26,6 +26,14 @@ left_frame = Frame(
 )
 left_frame.place(x=0, y=utils.height_percentage(25))
 
+center_frame = Frame(
+    root,
+    bg='green',
+    width=utils.width_percentage(75),
+    height=utils.height_percentage(75)
+)
+center_frame.place(x=utils.width_percentage(25), y=utils.height_percentage(25))
+
 
 # Run the window
 root.mainloop()
