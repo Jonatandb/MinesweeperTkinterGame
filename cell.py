@@ -1,13 +1,16 @@
-from tkinter import Button
+from tkinter import Button, Label
 import random
 import settings
 
 
 class Cell:
     all = []
+    cell_count = settings.CELL_COUNT
+    cell_count_label_object = None
 
     def __init__(self, x, y, is_mine=False):
         self.is_mine = is_mine
+        self.is_open = False
         self.cell_btn_object = None
         self.x = x
         self.y = y
@@ -18,13 +21,25 @@ class Cell:
     def create_btn_object(self, location):
         btn = Button(
             location,
-            bg="white",
             width=12,
             height=4
         )
         btn.bind('<Button-1>', self.left_click)
         btn.bind('<Button-3>', self.right_click)
         self.cell_btn_object = btn
+
+    @staticmethod
+    def create_cell_count_label(location):
+        lbl = Label(
+            location,
+            text=f"Cells Left: {settings.CELL_COUNT}",
+            width=12,
+            height=4,
+            bg="black",
+            fg="white",
+            font=("Helvetica", 30)
+        )
+        Cell.cell_count_label_object = lbl
 
     def left_click(self, event):
         if self.is_mine:
@@ -66,9 +81,18 @@ class Cell:
         return counter
 
     def show_cell(self):
-        self.cell_btn_object.configure(
-            text=f"{self.surrounded_cells_mines_count}",
-        )
+        if not self.is_open:
+            Cell.cell_count -= 1
+            self.cell_btn_object.configure(
+                text=f"{self.surrounded_cells_mines_count}",
+            )
+            # Replace the text of cell count label with the newer count
+            if Cell.cell_count_label_object:
+                Cell.cell_count_label_object.configure(
+                    text=f"Cells Left: {Cell.cell_count}"
+                )
+        # Mark the cell as opneed
+        self.is_open = True
 
     def show_mine(self):
         # A logic to interrupt the game and display a message that player lost!
