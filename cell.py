@@ -125,14 +125,17 @@ class Cell:
         self.window.after(100, self.show_game_over_message)
 
     def show_you_win_message(self):
-        ctypes.windll.user32.MessageBoxW(
-            0, "Congratulations! You won the game!", "Game over", 0
+        result = ctypes.windll.user32.MessageBoxW(
+            0, "Congratulations! You won the game!", "Game over", 5
         )
+        print(result)
 
     def show_game_over_message(self):
-        ctypes.windll.user32.MessageBoxW(
-            0, "You Lose! :(", "Game Over", 0
+        result = ctypes.windll.user32.MessageBoxW(
+            0, "You Lose! :(", "Game Over", 5
         )
+        if result == 2:
+            sys.exit()
 
     @staticmethod
     def randomize_mines():
