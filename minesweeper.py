@@ -43,6 +43,6 @@ for x in range(settings.GRID_SIZE):
 
 Cell.randomize_mines()
 
-# Run the window
 
+# Run the window
 root.mainloop()
