@@ -1,3 +1,4 @@
+import os
 import sys
 from tkinter import Button, Label
 import random
@@ -74,11 +75,10 @@ class Cell:
         # Cancel left and right click events if cell is already open
         self.cell_btn_object.unbind('<Button-1>')
         self.cell_btn_object.unbind('<Button-3>')
+        self.update_mines_count_label()
 
     def right_click_actions(self, event):
         if not self.is_open:
-            print(f"Candidates: {Cell.candidates_count}")
-
             if self.is_mine_candidate:
                 if Cell.candidates_count > 0:
                     Cell.candidates_count -= 1
@@ -89,13 +89,14 @@ class Cell:
                     Cell.candidates_count += 1
                     self.is_mine_candidate = True
                     self.cell_btn_object.config(bg="yellow")
+            self.update_mines_count_label()
 
-            # Replace the text of cell count label with the newer count
-            if Cell.mines_count_label_object:
-                Cell.mines_count_label_object.configure(
-                    text=f"Mines Left: {settings.MINES_COUNT - Cell.candidates_count}",
-                )
-            print(f"    Candidates: {Cell.candidates_count}")
+    def update_mines_count_label(self):
+        # Replace the text of mines count label with the newer count
+        if Cell.mines_count_label_object:
+            Cell.mines_count_label_object.configure(
+                text=f"Mines Left: {settings.MINES_COUNT - Cell.candidates_count}"
+            )
 
     def get_cell_by_coords(self, x, y):
         # Return a cell object based on the value of x and y
@@ -129,6 +130,8 @@ class Cell:
 
     def show_cell(self):
         if not self.is_open:
+            if self.is_mine_candidate:
+                Cell.candidates_count -= 1
             Cell.cell_count -= 1
             self.cell_btn_object.configure(
                 text=f"{self.surrounded_cells_mines_count}",
@@ -159,7 +162,6 @@ class Cell:
         result = ctypes.windll.user32.MessageBoxW(
             0, "Congratulations! You won the game!", "Game over", 5
         )
-        print(result)
 
     def show_game_over_message(self):
         result = ctypes.windll.user32.MessageBoxW(
