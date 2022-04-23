@@ -7,9 +7,19 @@ class Cell:
         self.cell_btn_object = None
 
     def create_btn_object(self, location):
-        btn1 = Button(
+        btn = Button(
             location,
             bg="white",
             text="Text",
         )
-        self.cell_btn_object = btn1
+        btn.bind('<Button-1>', self.left_click)
+        btn.bind('<Button-3>', self.right_click)
+        self.cell_btn_object = btn
+
+    def left_click(self, event):
+        print("Left click")
+        print(event)
+
+    def right_click(self, event):
+        print("Right click")
+        print(event)
